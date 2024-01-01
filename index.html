@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Собери Лисёнка!</title>
+    <style> 
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+            font-size: 0;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        h1,
+        p,
+        button {
+            font-size: 16px; /* Set font size for text elements */
+        }
+
+        .mosaicTile {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+            animation-duration: 2s;
+            animation-iteration-count: 1;
+            margin: 0; /* Remove margin */
+            padding: 0; /* Remove padding */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Собери Лисёнка!</h1>
+
+    <div id="mosaicContainer">
+        <img class="mosaicTile" src="sleepy_fox/6.jpg" alt="Tile 6">
+        <img class="mosaicTile" src="sleepy_fox/2.jpg" alt="Tile 2">
+        <img class="mosaicTile" src="sleepy_fox/4.jpg" alt="Tile 4"><br>
+        <img class="mosaicTile" src="sleepy_fox/1.jpg" alt="Tile 1">
+        <img class="mosaicTile" src="sleepy_fox/7.jpg" alt="Tile 7">
+        <img class="mosaicTile" src="sleepy_fox/3.jpg" alt="Tile 3"><br>
+        <img class="mosaicTile" src="sleepy_fox/8.jpg" alt="Tile 8">
+        <img class="mosaicTile" src="sleepy_fox/9.jpg" alt="Tile 9">
+        <img class="mosaicTile" src="sleepy_fox/5.jpg" alt="Tile 5">
+    </div>
+
+    <!-- <p>Желаю тебе веселого и счастливого дня!</p> -->
+
+    <button onclick="assembleMosaic()">Собрать мозаику!</button>
+
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function assembleMosaic() {
+            const mosaicContainer = document.getElementById('mosaicContainer');
+            mosaicContainer.innerHTML = '';
+
+            for (let i = 1; i <= 9; i++) {
+                const mosaicTile = document.createElement('img');
+                mosaicTile.src = `sleepy_fox/${i}.jpg`;
+                mosaicTile.alt = `Tile ${i}`;
+                mosaicTile.className = 'mosaicTile';
+                mosaicTile.style.animationName = `animateTile${i}`;
+                mosaicContainer.appendChild(mosaicTile);
+
+                if (i % 3 === 0 && i < 9) {
+                    mosaicContainer.appendChild(document.createElement('br'));
+                }
+
+                // Create keyframe animations
+                const keyframes = `@keyframes animateTile${i} {
+                                      0% { transform: translate(0, 0); }
+                                      25% { transform: translate(${getRandomInt(-100, 100)}px, ${getRandomInt(-100, 100)}px); }
+                                      50% { transform: translate(${getRandomInt(-200, 200)}px, ${getRandomInt(-200, 200)}px); }
+                                      75% { transform: translate(${getRandomInt(-100, 100)}px, ${getRandomInt(-100, 100)}px); }
+                                      100% { transform: translate(0, 0); }
+                                  }`;
+
+                const styleSheet = document.styleSheets[0];
+                styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
